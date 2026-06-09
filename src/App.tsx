@@ -83,31 +83,29 @@ export default function App() {
     }
   };
 
-  if (status === "success") {
-    return (
-      <div className="page">
-        <div className="success-card">
-          <div className="success-icon">✓</div>
-          <h2>Thank You!</h2>
-          <p className="success-msg">
-            Your Live Your Dream application has been submitted successfully.
-          </p>
-          <p className="success-sub">
-            Our team at NS Pinnacle Recruit will review your details and be in touch with you shortly.
-          </p>
-          <button className="btn-submit" onClick={() => setStatus("idle")}>
-            Submit Another Application
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="page">
+      {status === "success" && (
+        <div className="modal-overlay">
+          <div className="modal-card">
+            <div className="modal-icon">✓</div>
+            <h2>Form Successfully Submitted!</h2>
+            <p className="modal-msg">Please check your email for confirmation!!</p>
+            <p className="modal-sub">
+              Our team at NS Pinnacle Recruit will review your details and be in touch with you shortly.
+            </p>
+            <button className="btn-submit" onClick={() => setStatus("idle")}>
+              Submit Another Application
+            </button>
+          </div>
+        </div>
+      )}
       <div className="form-card">
         <div className="form-header">
-          <img src="/lyd-logo.png" alt="Live Your Dream" className="header-logo" />
+          <picture>
+            <source srcSet="/lyd-logo.webp" type="image/webp" />
+            <img src="/lyd-logo.png" alt="Live Your Dream" className="header-logo" />
+          </picture>
           <h1>Live Your Dream</h1>
           <p>H-2A Agricultural Worker Programme</p>
           <p className="sub">Complete the form below and our team will be in touch.</p>
@@ -207,10 +205,11 @@ export default function App() {
             required
             error={errors.canAfford}
           >
-            <div className="radio-group">
+            <div className="toggle-group">
               {["Yes", "No"].map((v) => (
-                <label key={v} className="radio-label">
+                <label key={v} className={`toggle-btn${form.canAfford === v ? " toggle-btn--active" : ""}`}>
                   <input type="radio" name="canAfford" value={v} checked={form.canAfford === v} onChange={set("canAfford")} />
+                  {form.canAfford === v && <span className="toggle-tick">✓</span>}
                   {v}
                 </label>
               ))}
@@ -229,10 +228,11 @@ export default function App() {
             required
             error={errors.everArrested}
           >
-            <div className="radio-group">
+            <div className="toggle-group">
               {["Yes", "No"].map((v) => (
-                <label key={v} className="radio-label">
+                <label key={v} className={`toggle-btn${form.everArrested === v ? " toggle-btn--active" : ""}`}>
                   <input type="radio" name="everArrested" value={v} checked={form.everArrested === v} onChange={set("everArrested")} />
+                  {form.everArrested === v && <span className="toggle-tick">✓</span>}
                   {v}
                 </label>
               ))}
@@ -240,10 +240,11 @@ export default function App() {
           </Field>
 
           <Field label="Have you had immigration problems in the US?" required error={errors.immigrationProblems}>
-            <div className="radio-group">
+            <div className="toggle-group">
               {["Yes", "No"].map((v) => (
-                <label key={v} className="radio-label">
+                <label key={v} className={`toggle-btn${form.immigrationProblems === v ? " toggle-btn--active" : ""}`}>
                   <input type="radio" name="immigrationProblems" value={v} checked={form.immigrationProblems === v} onChange={set("immigrationProblems")} />
+                  {form.immigrationProblems === v && <span className="toggle-tick">✓</span>}
                   {v}
                 </label>
               ))}
