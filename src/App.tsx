@@ -107,7 +107,7 @@ export default function App() {
     <div className="page">
       <div className="form-card">
         <div className="form-header">
-          <div className="header-badge">LYD</div>
+          <img src="/lyd-logo.png" alt="Live Your Dream" className="header-logo" />
           <h1>Live Your Dream</h1>
           <p>H-2A Agricultural Worker Programme</p>
           <p className="sub">Complete the form below and our team will be in touch.</p>

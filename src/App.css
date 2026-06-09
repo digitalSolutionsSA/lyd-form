@@ -15,16 +15,17 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 40px 16px 60px;
-  background: linear-gradient(160deg, #e8f0e4 0%, #f5f7f3 60%, #e4ede0 100%);
+  background: url("/lyd.png") center center / cover no-repeat fixed;
 }
 
 .form-card {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.97);
   border-radius: 16px;
-  box-shadow: 0 4px 32px rgba(30, 60, 20, 0.10);
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.25);
   width: 100%;
   max-width: 560px;
   overflow: hidden;
+  backdrop-filter: blur(4px);
 }
 
 /* ── Header ───────────────────────────────────────────────────────────────── */
@@ -35,19 +36,11 @@ body {
   padding: 36px 32px 28px;
 }
 
-.header-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  border: 2px solid rgba(255,255,255,0.4);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
+.header-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 12px;
+  object-fit: contain;
 }
 
 .form-header h1 {
