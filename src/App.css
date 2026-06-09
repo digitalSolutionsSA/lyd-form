@@ -15,7 +15,23 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 40px 16px 60px;
-  background: url("/lyd.png") center center / cover no-repeat fixed;
+  position: relative;
+}
+
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("/lyd.png") 70% center / cover no-repeat;
+  z-index: 0;
+}
+
+.page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.18);
+  z-index: 1;
 }
 
 .form-card {
@@ -26,6 +42,8 @@ body {
   max-width: 560px;
   overflow: hidden;
   backdrop-filter: blur(4px);
+  position: relative;
+  z-index: 2;
 }
 
 /* ── Header ───────────────────────────────────────────────────────────────── */
@@ -37,10 +55,11 @@ body {
 }
 
 .header-logo {
-  width: 120px;
+  width: 180px;
   height: auto;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
 }
 
 .form-header h1 {
