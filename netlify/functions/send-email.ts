@@ -3,8 +3,8 @@ import type { Handler } from "@netlify/functions";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = "LYD Applications <lyd@nspinnaclerecruit.com>";
-const MANAGEMENT = "lyd@nspinnaclerecruit.com";
+const FROM = "LYD Applications <lyd@nspinnaclerecruit.co.za>";
+const MANAGEMENT = "lyd@nspinnaclerecruit.co.za";
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== "POST") {
