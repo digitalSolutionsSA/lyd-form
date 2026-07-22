@@ -4,6 +4,28 @@ import { COUNTRIES } from "./countries";
 
 const TITLES = ["Mr", "Mrs", "Ms", "Miss", "Dr", "Prof", "Rev"];
 const ENGLISH_LEVELS = ["Basic", "Conversational", "Intermediate", "Advanced", "Fluent / Native"];
+const MARITAL_STATUSES = ["Single", "Married", "Divorced", "Widowed", "Separated"];
+const CHILDREN_COUNTS = ["0", "1", "2", "3", "4", "5+"];
+const APPLICATION_TYPES = [
+  "Just myself",
+  "Myself + Spouse",
+  "Myself + Children",
+  "Myself + Spouse + Children",
+];
+const HEARD_FROM_OPTIONS = [
+  "Social Media — Facebook",
+  "Social Media — Instagram",
+  "Social Media — TikTok",
+  "Social Media — Other",
+  "Google / Online Search",
+  "Referred by someone",
+  "Word of Mouth",
+  "Radio",
+  "TV",
+  "Newspaper / Magazine",
+  "Email / Newsletter",
+  "Other",
+];
 
 type FormData = {
   firstName: string;
@@ -18,12 +40,23 @@ type FormData = {
   countryOfBirth: string;
   countryOfCitizenship: string;
   countryOfResidence: string;
+  // Background
+  applicationType: string;
+  maritalStatus: string;
+  numberOfChildren: string;
+  currentCity: string;
+  currentlyInUSProgram: string;
+  usProgramDetails: string;
+  // Programme eligibility
   canAfford: string;
   englishLevel: string;
   everArrested: string;
   immigrationProblems: string;
   overstayedUS: string;
   visaDenied: string;
+  // How did you hear
+  heardFrom: string;
+  referredBy: string;
 };
 
 const blank: FormData = {
@@ -31,8 +64,11 @@ const blank: FormData = {
   phone: "", whatsapp: "",
   dobMonth: "", dobDay: "", dobYear: "",
   countryOfBirth: "", countryOfCitizenship: "", countryOfResidence: "",
+  applicationType: "", maritalStatus: "", numberOfChildren: "",
+  currentCity: "", currentlyInUSProgram: "", usProgramDetails: "",
   canAfford: "", englishLevel: "",
   everArrested: "", immigrationProblems: "", overstayedUS: "", visaDenied: "",
+  heardFrom: "", referredBy: "",
 };
 
 export default function App() {
@@ -41,7 +77,7 @@ export default function App() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
   const set = (field: keyof FormData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       setForm((p) => ({ ...p, [field]: e.target.value }));
       setErrors((p) => ({ ...p, [field]: "" }));
     };
@@ -51,8 +87,11 @@ export default function App() {
       "firstName", "lastName", "title", "email", "phone",
       "dobMonth", "dobDay", "dobYear",
       "countryOfBirth", "countryOfCitizenship", "countryOfResidence",
+      "applicationType", "maritalStatus", "numberOfChildren", "currentCity",
+      "currentlyInUSProgram",
       "canAfford", "englishLevel",
       "everArrested", "immigrationProblems", "overstayedUS", "visaDenied",
+      "heardFrom",
     ];
     const errs: Partial<Record<keyof FormData, string>> = {};
     required.forEach((k) => { if (!form[k]) errs[k] = "Required"; });
@@ -107,12 +146,13 @@ export default function App() {
             <img src="/lyd-logo.png" alt="Live Your Dream" className="header-logo" />
           </picture>
           <h1>Live Your Dream</h1>
-          <p>H-2A Agricultural Worker Programme</p>
+          <p>Agricultural Worker Programme</p>
           <p className="sub">Complete the form below and our team will be in touch.</p>
         </div>
 
         <form onSubmit={handleSubmit} noValidate>
 
+          {/* ── Personal Information ── */}
           <div className="section-label">Personal Information</div>
 
           <div className="row-2">
@@ -198,6 +238,72 @@ export default function App() {
             </select>
           </Field>
 
+          {/* ── Background Information ── */}
+          <div className="section-label">Background Information</div>
+
+          <Field label="Who is this application for?" required error={errors.applicationType}>
+            <div className="toggle-group toggle-group--wrap">
+              {APPLICATION_TYPES.map((v) => (
+                <label key={v} className={`toggle-btn${form.applicationType === v ? " toggle-btn--active" : ""}`}>
+                  <input type="radio" name="applicationType" value={v} checked={form.applicationType === v} onChange={set("applicationType")} />
+                  {form.applicationType === v && <span className="toggle-tick">✓</span>}
+                  {v}
+                </label>
+              ))}
+            </div>
+          </Field>
+
+          <Field label="Marital Status" required error={errors.maritalStatus}>
+            <select value={form.maritalStatus} onChange={set("maritalStatus")}>
+              <option value="">Please Select</option>
+              {MARITAL_STATUSES.map((s) => <option key={s}>{s}</option>)}
+            </select>
+          </Field>
+
+          <Field label="Number of Children" required error={errors.numberOfChildren}>
+            <div className="toggle-group">
+              {CHILDREN_COUNTS.map((v) => (
+                <label key={v} className={`toggle-btn${form.numberOfChildren === v ? " toggle-btn--active" : ""}`}>
+                  <input type="radio" name="numberOfChildren" value={v} checked={form.numberOfChildren === v} onChange={set("numberOfChildren")} />
+                  {form.numberOfChildren === v && <span className="toggle-tick">✓</span>}
+                  {v}
+                </label>
+              ))}
+            </div>
+          </Field>
+
+          <Field label="Current City / Town of Residence" required error={errors.currentCity}>
+            <input type="text" placeholder="e.g. Cape Town, Durban, Johannesburg…" value={form.currentCity} onChange={set("currentCity")} />
+          </Field>
+
+          <Field
+            label="Are you currently participating in any US agricultural or seasonal work visa programme?"
+            required
+            error={errors.currentlyInUSProgram}
+          >
+            <div className="toggle-group">
+              {["Yes", "No"].map((v) => (
+                <label key={v} className={`toggle-btn${form.currentlyInUSProgram === v ? " toggle-btn--active" : ""}`}>
+                  <input type="radio" name="currentlyInUSProgram" value={v} checked={form.currentlyInUSProgram === v} onChange={set("currentlyInUSProgram")} />
+                  {form.currentlyInUSProgram === v && <span className="toggle-tick">✓</span>}
+                  {v}
+                </label>
+              ))}
+            </div>
+          </Field>
+
+          {form.currentlyInUSProgram === "Yes" && (
+            <Field label="Please provide details of your current programme" error={errors.usProgramDetails}>
+              <textarea
+                placeholder="e.g. Programme name, employer, state, duration…"
+                value={form.usProgramDetails}
+                onChange={set("usProgramDetails")}
+                rows={3}
+              />
+            </Field>
+          )}
+
+          {/* ── Programme Eligibility ── */}
           <div className="section-label">Programme Eligibility</div>
 
           <Field
@@ -266,6 +372,32 @@ export default function App() {
               <option>No</option>
             </select>
           </Field>
+
+          {/* ── How Did You Hear About Us ── */}
+          <div className="section-label">How Did You Hear About Us?</div>
+
+          <Field label="Where did you first hear about the LYD programme?" required error={errors.heardFrom}>
+            <div className="toggle-group toggle-group--wrap">
+              {HEARD_FROM_OPTIONS.map((v) => (
+                <label key={v} className={`toggle-btn${form.heardFrom === v ? " toggle-btn--active" : ""}`}>
+                  <input type="radio" name="heardFrom" value={v} checked={form.heardFrom === v} onChange={set("heardFrom")} />
+                  {form.heardFrom === v && <span className="toggle-tick">✓</span>}
+                  {v}
+                </label>
+              ))}
+            </div>
+          </Field>
+
+          {form.heardFrom === "Referred by someone" && (
+            <Field label="Referrer's Name &amp; Contact Details" error={errors.referredBy}>
+              <input
+                type="text"
+                placeholder="e.g. Jane Smith — 082 123 4567"
+                value={form.referredBy}
+                onChange={set("referredBy")}
+              />
+            </Field>
+          )}
 
           {status === "error" && (
             <div className="error-banner">

@@ -21,29 +21,55 @@ export const handler: Handler = async (event) => {
   const {
     firstName, lastName, title, email, phone, whatsapp, dob,
     countryOfBirth, countryOfCitizenship, countryOfResidence,
+    applicationType, maritalStatus, numberOfChildren, currentCity,
+    currentlyInUSProgram, usProgramDetails,
     canAfford, englishLevel, everArrested, immigrationProblems,
     overstayedUS, visaDenied,
+    heardFrom, referredBy,
   } = data;
 
   const fullName = `${title} ${firstName} ${lastName}`;
 
+  const row = (label: string, value: string) => `
+    <tr>
+      <td style="padding:8px 12px;background:#f0f7eb;font-weight:600;width:220px">${label}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${value || "—"}</td>
+    </tr>`;
+
   const managementHtml = `
     <h2 style="color:#2d5a1b">New LYD Application</h2>
     <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600;width:220px">Full Name</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${fullName}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Email</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${email}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Phone</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">+27 ${phone}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">WhatsApp</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${whatsapp || "Not provided"}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Date of Birth</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${dob}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Country of Birth</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${countryOfBirth}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Country of Citizenship</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${countryOfCitizenship}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Country of Residence</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${countryOfResidence}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Can Afford Fees</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${canAfford}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">English Level</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${englishLevel}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Ever Arrested</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${everArrested}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Immigration Problems (US)</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${immigrationProblems}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">Overstayed in US</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${overstayedUS}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f0f7eb;font-weight:600">US Visa Denied</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0">${visaDenied}</td></tr>
+
+      <tr><td colspan="2" style="padding:10px 12px;background:#2d5a1b;color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em">PERSONAL INFORMATION</td></tr>
+      ${row("Full Name", fullName)}
+      ${row("Email", email)}
+      ${row("Phone", `+27 ${phone}`)}
+      ${row("WhatsApp", whatsapp || "Not provided")}
+      ${row("Date of Birth", dob)}
+      ${row("Country of Birth", countryOfBirth)}
+      ${row("Country of Citizenship", countryOfCitizenship)}
+      ${row("Country of Residence", countryOfResidence)}
+
+      <tr><td colspan="2" style="padding:10px 12px;background:#2d5a1b;color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em">BACKGROUND INFORMATION</td></tr>
+      ${row("Application For", applicationType)}
+      ${row("Marital Status", maritalStatus)}
+      ${row("Number of Children", numberOfChildren)}
+      ${row("Current City / Town", currentCity)}
+      ${row("Currently in US Work Programme", currentlyInUSProgram)}
+      ${currentlyInUSProgram === "Yes" ? row("US Programme Details", usProgramDetails || "Not provided") : ""}
+
+      <tr><td colspan="2" style="padding:10px 12px;background:#2d5a1b;color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em">PROGRAMME ELIGIBILITY</td></tr>
+      ${row("Can Afford Fees", canAfford)}
+      ${row("English Level", englishLevel)}
+      ${row("Ever Arrested", everArrested)}
+      ${row("Immigration Problems (US)", immigrationProblems)}
+      ${row("Overstayed in US", overstayedUS)}
+      ${row("US Visa Denied", visaDenied)}
+
+      <tr><td colspan="2" style="padding:10px 12px;background:#2d5a1b;color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em">REFERRAL</td></tr>
+      ${row("Heard About LYD Via", heardFrom)}
+      ${heardFrom === "Referred by someone" ? row("Referred By", referredBy || "Not provided") : ""}
+
     </table>
   `;
 

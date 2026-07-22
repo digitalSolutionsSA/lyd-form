@@ -126,6 +126,30 @@ form {
   margin-left: 2px;
 }
 
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #c8dab8;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1a2a14;
+  background: #f8fbf5;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.field textarea:focus {
+  border-color: #4a8c2a;
+  box-shadow: 0 0 0 3px rgba(74, 140, 42, 0.12);
+  background: #fff;
+}
+
+.field--error textarea {
+  border-color: #c0392b;
+}
+
 .field input,
 .field select {
   width: 100%;
@@ -228,6 +252,10 @@ form {
   display: flex;
   gap: 10px;
   padding: 4px 0;
+}
+
+.toggle-group--wrap {
+  flex-wrap: wrap;
 }
 
 .toggle-btn {
