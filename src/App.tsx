@@ -146,7 +146,7 @@ export default function App() {
             <img src="/lyd-logo.png" alt="Live Your Dream" className="header-logo" />
           </picture>
           <h1>Live Your Dream</h1>
-          <p>Agricultural Worker Programme</p>
+          <p> EB-3 Program</p>
           <p className="sub">Complete the form below and our team will be in touch.</p>
         </div>
 
